@@ -14,18 +14,18 @@ st.title(f"CT Property Tax Calculator ({latest_year})")
 
 col1, col2 = st.columns(2)
 with col1:
-    town = st.selectbox("Select Town", sorted(latest['town'].unique()))
+    municipality = st.selectbox("Select municipality", sorted(latest['municipality'].unique()))
 with col2:
     st.write(" ")  # spacer
 
-town_data = latest[latest['town'] == town].iloc[0]
+municipality_data = latest[latest['municipality'] == municipality].iloc[0]
 
 house_value = st.number_input("Assessed Home Value ($)", min_value=0, value=300000, step=10000)
 car_value = st.number_input("Assessed Vehicle Value ($)", min_value=0, value=25000, step=1000)
 
 # Mill rates (per $1,000 of assessed value)
-mill_real = town_data['mill_rate_real_personal'] or town_data['mill_rate']
-mill_car = town_data['mill_rate_motor_vehicle'] or town_data['mill_rate']
+mill_real = municipality_data['mill_rate_real_personal'] or municipality_data['mill_rate']
+mill_car = municipality_data['mill_rate_motor_vehicle'] or municipality_data['mill_rate']
 
 tax_house = (house_value / 1000) * mill_real
 tax_car = (car_value / 1000) * mill_car
@@ -38,7 +38,7 @@ c2.metric("Vehicle Tax", f"${tax_car:,.0f}")
 c3.metric("Total Estimated Tax", f"${total_tax:,.0f}", delta=f"{latest_year}")
 
 st.info(f"""
-**Rates used** ({town}, {latest_year})\n
+**Rates used** ({municipality}, {latest_year})\n
 - Real Estate/Personal Property: {mill_real} mills\n
 - Motor Vehicle: {mill_car} mills
 """)
