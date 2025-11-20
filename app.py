@@ -54,4 +54,4 @@ Data automatically pulled from [data.ct.gov](https://data.ct.gov)
 **Select a page from the sidebar on the left**
 """)
 
-st.caption("Built with Streamlit • Updated November 2025")
+st.caption("Updated November 2025")
